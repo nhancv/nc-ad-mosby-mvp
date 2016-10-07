@@ -29,4 +29,9 @@
         android:layout_height="wrap_content"
         android:text="Get goodbye"/>
 
+    <ListView
+        android:id="@+id/activity_main_lv_user_repo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
