@@ -2,6 +2,7 @@ package com.nhancv.mosbymvp;
 
 import android.support.annotation.NonNull;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 import com.joanzapata.android.BaseAdapterHelper;
@@ -14,6 +15,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -50,12 +52,30 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
         };
         //assign adapter to list
         lvUserRepo.setAdapter(adapter);
+        MainService_.intent(getApplication()).start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainService.getBus().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        MainService.getBus().unregister(this);
+        super.onPause();
     }
 
     @NonNull
     @Override
     public MainPresenter createPresenter() {
         return presenter;
+    }
+
+    @Subscribe
+    public void eventSubscribe(String msg) {
+        Toast.makeText(application, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Click(R.id.activity_main_bt_get_list)

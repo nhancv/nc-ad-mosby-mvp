@@ -46,4 +46,6 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     //quick adapter
     compile 'com.joanzapata.android:base-adapter-helper:1.1.11'
+    //event bus
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
