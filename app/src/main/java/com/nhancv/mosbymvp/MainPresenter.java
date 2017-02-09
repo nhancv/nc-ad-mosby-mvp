@@ -6,14 +6,14 @@ import com.nhancv.mosbymvp.model.Repo;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import bolts.Continuation;
 import bolts.Task;
 import bolts.TaskCompletionSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by nhancao on 9/26/16.
@@ -21,14 +21,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainPresenter extends MvpBasePresenter<MainView> {
 
-    private GitHubService service;
+    @Inject
+    GitHubService service;
 
+    @Inject
     public MainPresenter() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        service = retrofit.create(GitHubService.class);
+
     }
 
     /**

@@ -8,19 +8,36 @@ import com.joanzapata.android.BaseAdapterHelper;
 import com.joanzapata.android.QuickAdapter;
 import com.nhancv.mosbymvp.model.Repo;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView {
 
     @ViewById(R.id.activity_main_lv_user_repo)
     ListView lvUserRepo;
+    @App
+    MyApp application;
+    @Inject
+    MainPresenter presenter;
+
     private QuickAdapter<Repo> adapter;
+
+    @AfterInject
+    void inject() {
+        DaggerMainComponent.builder()
+                .appComponent(application.getAppComponent())
+                .build()
+                .inject(this);
+    }
 
     @AfterViews
     void init() {
@@ -38,7 +55,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     @NonNull
     @Override
     public MainPresenter createPresenter() {
-        return new MainPresenter();
+        return presenter;
     }
 
     @Click(R.id.activity_main_bt_get_list)
